@@ -1,0 +1,28 @@
+1. instalamos mysql en nuestra maquina: sudo apt install mysql-server
+2. instalamos la dependencia en el entorno virtual: pip install mysqlclient
+3. Dentro de mysql "sudo mysql -u root -p" creamos el usuario para acceder a la BBDD y aplicamos privilegios:
+ (ejemplo)
+ CREATE USER 'toni'@'localhost' IDENTIFIED BY '1234';
+ FLUSH PRIVILEGES;
+
+4. Creamos la BBDD:
+ (ejemplo)
+ CREATE DATABASE testCrud CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+5. En nuestro archivo settings configuramos la opciones de "DATABASE" para q utilice Mysql:
+ (ejemplo)
+ DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'OPTIONS': {
+            'read_default_file': os.path.join(BASE_DIR, 'mysql_tt.cnf'),
+        },
+    },
+}
+6. Creamos el archivo "mysql_tt.conf" para q coja de aqui la configuracion de acceso:
+ (ejemplo)
+    [client]
+    database = testCrud
+    user = toni
+    password = 1234
+    default-character-set = utf8
