@@ -1,27 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <!-- Required meta tags -->
         <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>CRUD</title>
-        <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
+    
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    
+        <title>CRUD LIST</title>
     </head>
     <body>
-        <form action="" method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Guardar Factura</button>
-        </form>
-        <h2>Facturas</h2>
-        {% for invoice in invoices %}
-            <li>
-                <strong>{{ invoice.title }}</strong> {{ invoice.description }}
-            </li>
-        {% empty %}
-            <li>No hay facturas guardadas.</li>
+        {% csrf_token %}
+        <div class="container-fluid">
+            <div class="row justify-content-md-center">
+                <div class="col">
+                    <div class="row justify-content-md-center">
+                        <div class="card" style="width: 18rem;">
+                            <div class="card-header">
+                                Facturas Descargadas
+                            </div>
+                            <ul class="list-group list-group-flush">
+                            {% for invoice in invoices_download %}
+                                <li class="list-group-item">
+                                    <strong>{{ invoice.title }}</strong> {{ invoice.description }}
+                                </li>
+                            {% empty %}
+                                <li class="list-group-item">No hay facturas guardadas.</li>
+                            {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="row justify-content-md-center">
+                        <div class="card">
+                            <div class="card-header">
+                                Facturas No Descargadas
+                            </div>
+                            <ul class="list-group list-group-flush">
+                            {% for invoice in invoices_not_download %}
+                                <li class="list-group-item">
+                                    <strong>{{ invoice.title }}</strong> {{ invoice.description }}
+                                </li>
+                            {% empty %}
+                                <li class="list-group-item">No hay facturas guardadas.</li>
+                            {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        {% endfor %}
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     </body>
 </html>
