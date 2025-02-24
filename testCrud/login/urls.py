@@ -5,4 +5,5 @@ app_name='login'
 
 urlpatterns = [
     path('', views.loginView, name='login_join'),
+    path('register/', views.registerView, name='login_register'),    
 ]
