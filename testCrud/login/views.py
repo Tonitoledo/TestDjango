@@ -1,19 +1,21 @@
 from django.shortcuts import redirect, render
 from django.contrib import messages
+from django.contrib.messages import get_messages
 from .models import User
 
 # Create your views here.
 def loginView(request):
-    users = User.objects.all()
+    storage = get_messages(request)
+    list(storage)
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
-        if users.filter(username=username, password=password).exists():
+        if User.objects.filter(username=username, password=password).exists():
+            list(get_messages(request))
             return redirect('crud:crud_list')
-    else:
-        messages.error(request, 'Usuario ya existe!')
-    
-    return render(request, 'login.html')
+        else:
+            messages.error(request, 'Credenciales incorrectas!')
+    return render(request, 'login.html', {'messages': messages.get_messages(request)})
 
 def registerView(request):
     name = ""

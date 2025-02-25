@@ -27,10 +27,12 @@
                         {% csrf_token %}
         
                         <h3 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Inicio de sesión</h3>
-
-                        <div data-mdb-input-init class="form-outline mb-4" style="z-index: 1050">
+                        
+                        {% if messages %}
+                        <div class="position-fixed top-0 end-0 p-3" style="z-index: 11">
                             {% for message in messages %}
-                            <div id="toastMessage" class="toast align-items-center text-bg-{% if message.tags == 'error' %}danger{% else %}success{% endif %} border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                            <div id="toastMessage" class="toast align-items-center text-bg-{% if message.tags == 'error' %}danger{% else %}success{% endif %} border-0"
+                                role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true">
                                 <div class="d-flex">
                                     <div class="toast-body">
                                         {{ message }}
@@ -40,6 +42,7 @@
                             </div>
                             {% endfor %}
                         </div>
+                        {% endif %}
 
                         <div data-mdb-input-init class="form-outline mb-4">
                             <label class="form-label" for="username">Nombre de usuario</label>
@@ -72,11 +75,13 @@
         </section>
         <script>
             document.addEventListener("DOMContentLoaded", function() {
-                var toastElList = document.querySelectorAll('.toast');
-                toastElList.forEach(function(toastEl) {
-                    var toast = new bootstrap.Toast(toastEl);
-                    toast.show();
-                });
+                var toastElList = [].slice.call(document.querySelectorAll('.toast'));
+                if (toastElList.length > 0) {  // Solo si hay mensajes
+                    toastElList.forEach(function(toastEl) {
+                        var toast = new bootstrap.Toast(toastEl);
+                        toast.show();
+                    });
+                }
             });
         </script>
     </body>
