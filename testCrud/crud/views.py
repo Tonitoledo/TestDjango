@@ -1,3 +1,4 @@
+import json
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from .models import Invoice
@@ -15,15 +16,39 @@ def invoice_list(request):
 def formInvoice_create(request):
     return render(request, "invoice_create.html") 
 
-def invoice_save(request):
+def post(request):
     if request.method == 'POST':
-        title = request.POST.get("title")
-        description = request.POST.get("description")
-        if title:
-            invoice = Invoice.objects.create(title=title, description=description)
-            return JsonResponse({"success": True, "invoice_id": invoice.id})
+        if request.POST.get("action") == "create":
+            invoice_save()
+        elif request.POST.get("action") == "delete":
+            invoice_del()
+        #elif request.POST.get("action") == "update":
+            #invoice_update()
+    return render(request, 'invoice_create.html')
 
-    return render(request, 'invoice_create.html')        
+def invoice_save(request):
+    title = request.POST.get("title")
+    description = request.POST.get("description")
+    if title:
+        invoice = Invoice.objects.create(title=title, description=description)
+        return JsonResponse({"success": True, "invoice_id": invoice.id})
+            
+
+def invoice_del(request):
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            invoice_id = data.get("invoice_id")
+            
+            if Invoice.objects.filter(id=invoice_id).exists():
+                Invoice.objects.filter(id=invoice_id).delete()
+                return JsonResponse({"success": True})
+            
+        except Exception as e:
+            return JsonResponse({"success": False, "error": str(e)})
+    
+    return JsonResponse({"success": False})
+ 
 
 def get(request):
     form = InvoiceForm()
