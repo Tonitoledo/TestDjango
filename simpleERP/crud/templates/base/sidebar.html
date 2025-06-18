@@ -2,20 +2,15 @@
 {% url 'crud:crud_create' as urlCrudCreate %}
 {% block sidebar %}
     <div class="sidebar-content">
-        <p>Panel de Navegación</p>
-        <ul class="list-unstyled components">
-            <li>
-                <a href="{{urlCrudList}}">Listado de facturas</a>
-            </li>
-            <li>
-                <a href="{{urlCrudCreate}}">Crear factura</a>
-            </li>
-            <li>
-                <a href="#">Opción 3</a>
-            </li>
-            <li>
-                <a href="#">Opción 4</a>
-            </li>
-        </ul>
+        <div class="sidebar-item py-2 rounded-3 mb-4">
+            <a class="nav-link" href="{{urlCrudList}}">
+                Facturas
+            </a>
+        </div>
+        <div class="sidebar-item py-2 rounded-3 mb-4">
+            <a class="nav-link" href="{{urlCrudCreate}}">
+                Crear factura
+            </a>
+        </div>
     </div>
 {% endblock%}

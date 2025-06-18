@@ -1,5 +1,6 @@
 /* Sidebar styles */
 .sidebar-content{
+    text-align: center;
     width: 250px;
     background-color: #99a2c9;
     position: fixed;
@@ -8,5 +9,31 @@
     overflow-y: auto;
     padding: 20px;
     border-radius: 12px;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3);
+}
+
+.sidebar-item{
+    display: block;
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 18px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.sidebar-item:hover {
+    height: 100%;
+    background-color: #5f74d1;
+    transition: background-color 0.8s ease;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3);
+}
+
+.nav-link{
+    color: #fff;
+}
+.nav-link:hover{
+    color: #fff;
 }

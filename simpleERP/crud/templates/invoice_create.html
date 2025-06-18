@@ -10,11 +10,13 @@
                         {% csrf_token %}
                         <div class="form-floating mb-3 h-25">
                             <input type="text" class="form-control" name="title" id="floatingInput" required>
-                            <label for="floatingInput">Nombre de la factura</label>
+                            <label for="floatingInput">Codigo de la factura</label>
                         </div>
                         <div class="form-floating">
                             <input type="text" class="form-control" id="floatingDescription" name="description">
                             <label for="floatingDescription">Descripción</label>
+                            <input type="text" class="form-control" id="floatingDescription" name="description">
+                            <label for="floatingDescription">Unidades</label>
                         </div>
                         <div class="mx-auto my-3" style="width: 200px;">
                             <button name="action" value="create" type="submit" class="btn btn-primary">Guardar</button>
