@@ -29,19 +29,19 @@
                         <h3 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Inicio de sesión</h3>
                         
                         {% if messages %}
-                        <div class="position-fixed top-0 end-0 p-3" style="z-index: 11">
-                            {% for message in messages %}
-                            <div id="toastMessage" class="toast align-items-center text-bg-{% if message.tags == 'error' %}danger{% else %}success{% endif %} border-0"
-                                role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true">
-                                <div class="d-flex">
-                                    <div class="toast-body">
-                                        {{ message }}
+                            <div class="position-fixed top-0 end-0 p-3" style="z-index: 11">
+                                {% for message in messages %}
+                                <div id="toastMessage" class="toast align-items-center text-bg-{% if message.tags == 'error' %}danger{% else %}success{% endif %} border-0"
+                                    role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true">
+                                    <div class="d-flex">
+                                        <div class="toast-body">
+                                            {{ message }}
+                                        </div>
+                                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
                                     </div>
-                                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
                                 </div>
+                                {% endfor %}
                             </div>
-                            {% endfor %}
-                        </div>
                         {% endif %}
 
                         <div data-mdb-input-init class="form-outline mb-4">

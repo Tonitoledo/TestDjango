@@ -1,0 +1,54 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.dataTables.min.css">
+{% csrf_token %}
+<div class="container-fluid">
+    <div class="row py-5 justify-content-md-center">
+        <h1>Facturas</h1>
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <table id="invoiceTable" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Título</th>
+                                <th>Descripción</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody> <!-- Se llenará con AJAX -->
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+{% block script%}
+<script src="https://cdn.datatables.net/1.13.4/js/dataTables.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const table = new DataTable("#invoiceTable", {
+            ajax: async function (data, callback) {
+                const response = await fetch("/api/invoices/");
+                const invoices = await response.json();
+                callback({ data: invoices });
+            },
+            columns: [
+                { data: "id" },
+                { data: "title" },
+                { data: "description" },
+                { 
+                    data: "id",
+                    render: function (data) {
+                        return `<button onclick="deleteInvoice(${data})" class="btn btn-danger">Eliminar</button>`;
+                    }
+                }
+            ]
+        });
+    });
+</script>
+{% endblock script%}

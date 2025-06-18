@@ -6,12 +6,28 @@ from .forms import InvoiceForm
 
 
 
+def invoice_list_api(request):
+    invoices = Invoice.objects.all().values("id", "title", "description")
+    return JsonResponse(list(invoices), safe=False)
+
+
 def invoice_list(request):
     try:
         if request.method == "GET":
-            return get(request)
+            return render(request, 'invoice_list.html')
     except Exception as e:
         return HttpResponse(str(e))
+
+def get(request):
+    form = InvoiceForm()
+    invoices_not_download = Invoice.objects.filter(isDownload=False)
+    invoices_download = Invoice.objects.filter(isDownload=True)
+
+    return render(request, 'invoice_list.html', {
+        'form':form,
+        'invoices_not_download': invoices_not_download,
+        'invoices_download':invoices_download
+    })
     
 def formInvoice_create(request):
     return render(request, "invoice_create.html") 
@@ -48,15 +64,3 @@ def invoice_del(request):
             return JsonResponse({"success": False, "error": str(e)})
     
     return JsonResponse({"success": False})
- 
-
-def get(request):
-    form = InvoiceForm()
-    invoices_not_download = Invoice.objects.filter(isDownload=False)
-    invoices_download = Invoice.objects.filter(isDownload=True)
-
-    return render(request, 'invoice_list.html', {
-        'form':form,
-        'invoices_not_download': invoices_not_download,
-        'invoices_download':invoices_download
-    })
