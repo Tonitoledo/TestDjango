@@ -1,0 +1,21 @@
+{% url 'crud:crud_list' as urlCrudList %}
+{% url 'crud:crud_create' as urlCrudCreate %}
+{% block sidebar %}
+    <div class="sidebar-content">
+        <p>Panel de Navegación</p>
+        <ul class="list-unstyled components">
+            <li>
+                <a href="{{urlCrudList}}">Listado de facturas</a>
+            </li>
+            <li>
+                <a href="{{urlCrudCreate}}">Crear factura</a>
+            </li>
+            <li>
+                <a href="#">Opción 3</a>
+            </li>
+            <li>
+                <a href="#">Opción 4</a>
+            </li>
+        </ul>
+    </div>
+{% endblock%}

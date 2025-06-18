@@ -7,7 +7,7 @@
 
 4. Creamos la BBDD:
  (ejemplo)
- CREATE DATABASE testCrud CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ CREATE DATABASE simpleERP CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 5. En nuestro archivo settings configuramos la opciones de "DATABASE" para q utilice Mysql:
  (ejemplo)
@@ -22,7 +22,7 @@
 6. Creamos el archivo "mysql_tt.conf" para q coja de aqui la configuracion de acceso:
  (ejemplo)
     [client]
-    database = testCrud
+    database = simpleERP
     user = toni
     password = 1234
     default-character-set = utf8

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<style class="text/css">
+  .main{
+    margin-left: 250px;
+    padding: 20px;
+  }
+
+  .navbar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color:rgb(188, 221, 253);
+    z-index: 1000;
+  }
+</style>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="{%  static 'css/sidebar.css' %}" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+  
+  {% if request.resolver_match.url_name != "login" %}
+  {% endif %}
+  <div id="navbar" class="navbar">
+    {% block navbar %}
+      {% include "base/navbar.html" %}
+    {% endblock %}
+  </div>
+  <div id="sidebar" class="sidebar">
+    {% block sidebar %}
+      {% include "base/sidebar.html" %}
+    {% endblock %}
+  </div>
+  <div id= "content" name="content" class="main">
+    {% block content %}{% endblock %}
+  </div>
+
+  {% block script %}{% endblock %}
+</body>
+</html>
