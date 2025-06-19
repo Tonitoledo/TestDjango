@@ -11,3 +11,4 @@ Extesions I used for the web:
 - Material Icon Theme
 - Path Intellisense
 - Prettier - code
+- SQLITE Viewer

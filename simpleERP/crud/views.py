@@ -2,8 +2,7 @@ import json
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from .models import Invoice
-from .forms import InvoiceForm
-
+from .forms import InvoiceForm, LineInvoiceForm
 
 
 def invoice_list_api(request):
@@ -29,38 +28,22 @@ def get(request):
         'invoices_download':invoices_download
     })
     
-def formInvoice_create(request):
-    return render(request, "invoice_create.html") 
-
-def post(request):
+def create_invoice(request):
     if request.method == 'POST':
-        if request.POST.get("action") == "create":
-            invoice_save()
-        elif request.POST.get("action") == "delete":
-            invoice_del()
-        #elif request.POST.get("action") == "update":
-            #invoice_update()
-    return render(request, 'invoice_create.html')
-
-def invoice_save(request):
-    title = request.POST.get("title")
-    description = request.POST.get("description")
-    if title:
-        invoice = Invoice.objects.create(title=title, description=description)
-        return JsonResponse({"success": True, "invoice_id": invoice.id})
-            
-
-def invoice_del(request):
-    if request.method == "POST":
-        try:
-            data = json.loads(request.body)
-            invoice_id = data.get("invoice_id")
-            
-            if Invoice.objects.filter(id=invoice_id).exists():
-                Invoice.objects.filter(id=invoice_id).delete()
-                return JsonResponse({"success": True})
-            
-        except Exception as e:
-            return JsonResponse({"success": False, "error": str(e)})
-    
-    return JsonResponse({"success": False})
+        form = InvoiceForm(request.POST)
+        if form.is_valid():
+            print(form.data)
+            invoice = Invoice(
+                ref=form.cleaned_data['ref'],
+                title=form.cleaned_data['title'],
+                description=form.cleaned_data['description'],
+                customer=form.cleaned_data['customer'],
+                date=form.cleaned_data['date'],
+                total=form.cleaned_data['total']
+            )
+            print(invoice)
+            invoice.save()
+            return redirect('crud:invoice_list')
+    else:
+        form = InvoiceForm()
+    return render(request, 'invoice_create.html', {'form': form})

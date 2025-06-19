@@ -12,7 +12,7 @@ def loginView(request):
         password = request.POST.get('password')
         if User.objects.filter(username=username, password=password).exists():
             list(get_messages(request))
-            return redirect('crud:crud_list')
+            return redirect('crud:invoice_list')
         else:
             messages.error(request, 'Credenciales incorrectas!')
     return render(request, 'login.html', {'messages': messages.get_messages(request)})

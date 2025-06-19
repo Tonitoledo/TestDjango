@@ -5,7 +5,7 @@ class Invoice(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField(blank=True)
     customer = models.CharField(max_length=100, blank=True)
-    date = models.DateField(auto_now_add=True, null=True, blank=True)
+    date = models.DateField()
     total = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     lastUpdated = models.DateTimeField(auto_now=True)
 

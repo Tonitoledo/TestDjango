@@ -1,67 +1,53 @@
 {% extends "base/base.html" %}
 {% block content %}
-{% csrf_token %}
 <div class="container-fluid">
     <div class="row justify-content-md-center">
-        <div class="col">
-            <div class="card mt-5 mx-4">
-                <div class="mx-2 my-2">
-                    <form id="formFactura">
-                        {% csrf_token %}
-                        <div class="form-floating mb-3 h-25">
-                            <input type="text" class="form-control" name="title" id="floatingInput" required>
-                            <label for="floatingInput">Codigo de la factura</label>
-                        </div>
-                        <div class="form-floating">
-                            <input type="text" class="form-control" id="floatingDescription" name="description">
-                            <label for="floatingDescription">Descripción</label>
-                            <input type="text" class="form-control" id="floatingDescription" name="description">
-                            <label for="floatingDescription">Unidades</label>
-                        </div>
-                        <div class="mx-auto my-3" style="width: 200px;">
-                            <button name="action" value="create" type="submit" class="btn btn-primary">Guardar</button>
-                            <input class="btn btn-outline-danger" type="reset" value="Cancelar">
-                        </div>
-                    </form>
-                </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <h4><strong class="titulo-pagina">
+                    BLABLA
+                </strong></h4>
             </div>
         </div>
     </div>
 </div>
+
+<form action="" id="createInvoiceForm" method="post">
+    {% csrf_token %}
+    <div class="card mt-5 mx-4">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-row">
+                        <label for="ref">Número de factura:</label>
+                        <input type="text" class="form-control" id="ref" name="ref" required>
+
+                        <label for="description">Descripción:</label>
+                        <input type="text" class="form-control" id="description" name="description">
+                    </div>
+                    <div class="form-row">
+                        <label for="unit">Unidades:</label>
+                        <input type="number" class="form-control" id="unit" name="unit" required>
+
+                        <label for="customer">Cliente:</label>
+                        <input type="text" class="form-control" id="customer" name="customer" required>
+
+                        <label for="date">Fecha:</label>
+                        <input type="date" class="form-control" id="date" name="date" required>
+
+                         <label for="total">Total:</label>
+                        <input type="number" class="form-control" id="total" name="total" required>
+                    </div>
+                </div>
+            </div>
+             <input type="submit" class="btn btn-primary mt-3" value="Crear Factura">
+        </div>
+    </div>
+</form>
+
 {% endblock content %}
 {% block script %}
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const form = document.getElementById("formFactura");
-
-        form.addEventListener("submit", function (event) {
-            event.preventDefault();  // Evita que el formulario recargue la página
-
-            let formData = new FormData(form);
-            let csrfToken = document.querySelector("[name=csrfmiddlewaretoken]").value;
-
-            fetch("{% url 'crud:invoice_save' %}", {  // Reemplaza con la URL de tu vista
-                method: "POST",
-                body: formData,
-                headers: {
-                    "X-CSRFToken": csrfToken  // CSRF obligatorio para seguridad en Django
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert("✅ Factura guardada correctamente!");
-                    form.reset(); // Limpia el formulario
-                    window.location.href = "{% url 'crud:crud_list' %}";
-                } else {
-                    alert("⚠️ Error al guardar la factura.");
-                }
-            })
-            .catch(error => {
-                console.error("Error en la petición AJAX:", error);
-                alert("❌ Ocurrió un error inesperado.");
-            });
-        });
-    });
+    
 </script>
 {% endblock script%}
