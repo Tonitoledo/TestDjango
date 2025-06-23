@@ -2,6 +2,8 @@ from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.contrib.messages import get_messages
 from .models import User
+from django.contrib.auth import login as auth_login
+from django.contrib.auth.hashers import check_password
 
 # Create your views here.
 def loginView(request):
@@ -10,11 +12,15 @@ def loginView(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
-        if User.objects.filter(username=username, password=password).exists():
-            list(get_messages(request))
-            return redirect('crud:invoice_list')
-        else:
-            messages.error(request, 'Credenciales incorrectas!')
+        try:
+            user = User.objects.get(username=username)
+            if check_password(password, user.password):  # Comparación segura
+                auth_login(request, user)
+                return redirect('crud:invoice_list')
+            else:
+                messages.error(request, 'Credenciales incorrectas!')
+        except User.DoesNotExist:
+            messages.error(request, 'Usuario no existe!')
     return render(request, 'login.html', {'messages': messages.get_messages(request)})
 
 def registerView(request):
