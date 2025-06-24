@@ -2,8 +2,9 @@
 2. instalamos la dependencia en el entorno virtual: pip install mysqlclient
 3. Dentro de mysql "sudo mysql -u root -p" creamos el usuario para acceder a la BBDD y aplicamos privilegios:
  (ejemplo)
- CREATE USER 'toni'@'localhost' IDENTIFIED BY '1234';
+ CREATE USER 'toni'@'localhost' IDENTIFIED BY 'Blablu1234';
  FLUSH PRIVILEGES;
+ GRANT ALL PRIVILEGES ON simpleERP.* TO 'toni'@'localhost';
 
 4. Creamos la BBDD:
  (ejemplo)
@@ -24,5 +25,5 @@
     [client]
     database = simpleERP
     user = toni
-    password = 1234
+    password = Blablu1234
     default-character-set = utf8
