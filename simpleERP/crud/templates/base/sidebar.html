@@ -1,15 +1,21 @@
-{% url 'crud:invoice_list' as urlCrudList %}
-{% url 'crud:invoice_create' as urlCrudCreate %}
+{% url 'crud:invoice_list' as urlInvoiceList %}
+{% url 'crud:invoice_create' as urlInvoiceCreate %}
+{% url 'crud:product_create' as urlProductCreate %}
 {% block sidebar %}
     <div class="sidebar-content">
         <div class="sidebar-item py-2 rounded-3 mb-4">
-            <a class="nav-link" href="{{urlCrudList}}">
+            <a class="nav-link" href="{{urlInvoiceList}}">
                 Facturas
             </a>
         </div>
         <div class="sidebar-item py-2 rounded-3 mb-4">
-            <a class="nav-link" href="{{urlCrudCreate}}">
+            <a class="nav-link" href="{{urlInvoiceCreate}}">
                 Crear factura
+            </a>
+        </div>
+        <div class="sidebar-item py-2 rounded-3 mb-4">
+            <a class="nav-link" href="{{urlProductCreate}}">
+                Crear Producto
             </a>
         </div>
     </div>

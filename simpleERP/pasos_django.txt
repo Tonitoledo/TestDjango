@@ -1,0 +1,15 @@
+1. Para empezar a trabajar los principal es determinar que queremos para la web, en mi caso un ERP Simple, donde se crear facturas.
+
+    1.1. Crearemos la vista para crear las facturas, la mejor manera es realizar estos pasos, primero la url, segundo vista, tercero el form y por ultimo el model.
+
+    Análisis Comparativo
+    --------------------
+     Enfoque	                    Ventajas	              Desventajas	                  Cuando Usar
+    =====================================================================================================================
+    Solo Form	            Rápido implementación	    Limitado para lógica compleja	      CRUD simples
+
+    Solo View	            Máximo control	               Más código repetitivo	    Procesos muy personalizados
+
+    Form + View	            Balance perfecto	            Curva de aprendizaje	    Casos reales (90% de situaciones)
+
+    Class-Based VieW        Menos código boilerplate	      Menos flexible	         Cuando el flujo es estándar

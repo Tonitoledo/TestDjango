@@ -1,54 +1,134 @@
 {% extends "base/base.html" %}
+{% load static %}
+{% load i18n %}
+
 {% block content %}
-<div class="container-fluid">
-    <div class="row justify-content-md-center">
-        <div class="row">
-            <div class="col-lg-12">
-                <h4><strong class="titulo-pagina">
-                    BLABLA
-                </strong></h4>
+<div class="container mt-4">
+    <h2>{% if object %}{% trans "Editar Factura" %}{% else %}{% trans "Nueva Factura" %}{% endif %}</h2>
+    
+    <form method="post" id="invoiceForm">
+        {% csrf_token %}
+        
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h5>{% trans "Datos de la Factura" %}</h5>
             </div>
-        </div>
-    </div>
-</div>
-
-<form action="" id="createInvoiceForm" method="post">
-    {% csrf_token %}
-    <div class="card mt-5 mx-4">
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-row">
-                        <label for="ref">Serie de factura:</label>
-                        <input type="text" class="form-control" id="ref" name="ref" required>
-                        <label for="numberInvoice">Número de factura:</label>
-                        <input type="text" class="form-control" id="numberInvoice" name="numberInvoice" required>
-                        <label for="description">Descripción:</label>
-                        <input type="text" class="form-control" id="description" name="description">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            {{ form.ref.label_tag }}
+                            {{ form.ref }}
+                            {{ form.ref.errors }}
+                        </div>
                     </div>
-                    <div class="form-row">
-                        <label for="unit">Unidades:</label>
-                        <input type="number" class="form-control" id="unit" name="unit" required>
-
-                        <label for="customer">Cliente:</label>
-                        <input type="text" class="form-control" id="customer" name="customer" required>
-
-                        <label for="date">Fecha:</label>
-                        <input type="date" class="form-control" id="date" name="date" required>
-
-                         <label for="total">Total:</label>
-                        <input type="decimal" class="form-control" id="total" name="total" required>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            {{ form.numberInvoice.label_tag }}
+                            {{ form.numberInvoice }}
+                            {{ form.numberInvoice.errors }}
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            {{ form.title.label_tag }}
+                            {{ form.title }}
+                            {{ form.title.errors }}
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            {{ form.date.label_tag }}
+                            {{ form.date }}
+                            {{ form.date.errors }}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            {{ form.customer.label_tag }}
+                            {{ form.customer }}
+                            {{ form.customer.errors }}
+                        </div>
                     </div>
                 </div>
             </div>
-             <input type="submit" class="btn btn-primary mt-3" value="Crear Factura">
         </div>
-    </div>
-</form>
 
-{% endblock content %}
+        <!-- Lines Invoice -->
+        <div class="card mb-4">
+            <div class="card-header bg-secondary text-white  d-flex justify-content-between align-items-center">
+                <h5>{% trans "Lineas de Factura" %}</h5>
+                <button type="button" class="btn btn-sm btn-light" id="addLine">
+                    <i class="fas fa-plus"></i> {% trans "Añadir Línea" %}
+                </button>
+            </div>
+             <div class="card-body">
+                {{ formset.management_form }}
+                <div id="lines-container">
+                    {% for form_line in formset %}
+                    <div class="line-form mb-3 p-3 border rounded">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    {{ form_line.product.label_tag }}
+                                    {{ form_line.product }}
+                                    {{ form_line.product.errors }}
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    {{ form_line.quantity.label_tag }}
+                                    {{ form_line.quantity }}
+                                    {{ form_line.quantity.errors }}
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    {{ form_line.unit_price.label_tag }}
+                                    {{ form_line.unit_price }}
+                                    {{ form_line.unit_price.errors }}
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>{% trans "Subtotal" %}</label>
+                                    <input type="text" class="form-control line-total" value="0.0000" readonly>
+                                </div>
+                            </div>
+                            <div class="col-md-1 d-flex align-items-end">
+                                <button type="button" class="btn btn-danger btn-sm remove-line">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        {% for hidden in form_line.hidden_fields %}
+                            {{ hidden }}
+                        {% endfor %}
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="text-right mt-4">
+                    <h4>{% trans "Total Factura:" %} <span id="invoiceTotal">0.0000</span> €</h4>
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="form-group text-right">
+            <a href="{% url 'crud:invoice_list' %}" class="btn btn-secondary">
+                <i class="fas fa-times"></i> {% trans "Cancelar" %}
+            </a>
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-save"></i> {% trans "Guardar Factura" %}
+            </button>
+        </div>
+    </form>
+</div>
+
+{% endblock %}
+
 {% block script %}
-<script>
-    
-</script>
-{% endblock script%}
+    <script src="{% static 'js/invoice_form.js' %}"></script>
+{% endblock %}

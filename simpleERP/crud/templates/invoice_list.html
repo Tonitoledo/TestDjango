@@ -1,13 +1,20 @@
 
-{% extends 'base.html' %}
+{% extends 'base/base.html' %}
 {% load render_table from django_tables2 %}
-{% load crispy_forms_tags %}
+
 {% load i18n %}
+
+{% url 'crud:invoice_create' as urlCrudCreate %}
 
 {% block content %}
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.dataTables.min.css">
 {% csrf_token %}
 <div class="container-fluid">
+    <a href="{% url 'crud:invoice_create' %}">
+        <button class="py-2 rounded-3 mb-4" id="addInvoice">
+            <i class="fas fa-plus"></i> {% trans "Nueva Factura" %}
+        </button>
+    </a>
     <div class="card shadow mb-4">
         <div class="card-body">
             {% render_table table %}

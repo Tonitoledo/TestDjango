@@ -1,0 +1,60 @@
+{% extends "base/base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>{% if object %}{% trans "Editar Producto" %}{% else %}{% trans "Nuevo Producto" %}{% endif %}</h2>
+    
+    <form method="post" id="invoiceForm">
+        {% csrf_token %}
+        
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h5>{% trans "Datos del Producto" %}</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            {{ form.cod.label_tag }}
+                            {{ form.cod }}
+                            {{ form.cod.errors }}
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            {{ form.title.label_tag }}
+                            {{ form.title }}
+                            {{ form.title.errors }}
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            {{ form.description.label_tag }}
+                            {{ form.description }}
+                            {{ form.description.errors }}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            {{ form.price.label_tag }}
+                            {{ form.price }}
+                            {{ form.price.errors }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group text-right">
+            <a href="{% url 'crud:invoice_list' %}" class="btn btn-secondary">
+                <i class="fas fa-times"></i> {% trans "Cancelar" %}
+            </a>
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-save"></i> {% trans "Guardar Factura" %}
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -128,6 +128,7 @@ LOGGING = {
     },
 }
 
+AUTH_USER_MODEL = 'login.User'
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
