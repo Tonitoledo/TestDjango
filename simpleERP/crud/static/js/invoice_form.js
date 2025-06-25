@@ -1,16 +1,26 @@
 document.addEventListener('DOMContentLoaded', function() {
+    const addLine = document.getElementById('addLine') 
+    addLine.addEventListener('click', add_new_line)
 
 
-    
-    
 
 });
 
+function add_new_line(event){
+    if (event){
+        event.preventDefault()
+    }
+    const formCopyTarget = document.getElementById('lines-container')
+    const emptyForEl = document.getElementById('lineProduct').cloneNode(true) //clone form
+    emptyForEl.setAttribute('class', 'line-form mb-3 p-3 border rounded')
+    //  add new empty form to our html form 
+    formCopyTarget.append(emptyForEl)
+}
+
 function updateUnitPrice(select){
     const selectedProduct = select.options[select.selectedIndex];
-    const productId = selectedProduct.value;
     const price = selectedProduct.getAttribute('data-price');
-    if (price && productId){ 
+    if (price){ 
         const lineForm = select.closest('.line-form');
         const priceInput = lineForm.querySelector('unit-price-input');
         priceInput.value = price;

@@ -64,11 +64,12 @@
                     <i class="fas fa-plus"></i> {% trans "Añadir Línea" %}
                 </button>
             </div>
-             <div class="card-body">
+            {% if formset %}
+            <div class="card-body">
                 {{ formset.management_form }}
                 <div id="lines-container">
                     {% for form_line in formset %}
-                    <div class="line-form mb-3 p-3 border rounded">
+                    <div id="lineProduct" class="line-form mb-3 p-3 border rounded">
                         <div class="row">
                             <div class="col-md-5">
                                 <div class="form-group">
@@ -114,6 +115,7 @@
                 </div>
             </div>
         </div>
+        {% endif %}
         
         
         <div class="form-group text-right">

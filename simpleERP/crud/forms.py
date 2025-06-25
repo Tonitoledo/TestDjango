@@ -55,11 +55,6 @@ class ProductForm(forms.ModelForm):
             }),
             
         }
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        # Ordenar productos por código y mejorar la visualización
-        self.fields['product'].queryset = Product.objects.all().order_by('cod')
-        self.fields['product'].label_from_instance = lambda obj: f"{obj.cod} - {obj.title}"
 
 class LineInvoiceForm(forms.ModelForm):
     class Meta:
