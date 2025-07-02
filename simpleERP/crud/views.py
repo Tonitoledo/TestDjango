@@ -1,9 +1,11 @@
 import logging
 from django_tables2 import SingleTableMixin
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, get_object_or_404, render
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import reverse, reverse_lazy
-from django.views.generic import ListView, CreateView, View
+from django.http import JsonResponse
+from django.template.loader import render_to_string
+from django.urls import reverse_lazy
+from django.views.generic import ListView, CreateView, UpdateView
 from .models import Invoice
 from .forms import InvoiceForm, LineInvoiceFormSet, ProductForm
 from crud.tables.invoiceTable import InvoiceTable
@@ -26,7 +28,7 @@ class InvoiceListView(LoginRequiredMixin, SingleTableMixin, ListView):
     
 class InvoiceCreateView(LoginRequiredMixin, CreateView):
     form_class = InvoiceForm
-    template_name = "invoice_create.html"
+    template_name = "invoice_modal_form.html"
     success_url = reverse_lazy('crud:invoice_list')
 
     def get_context_data(self, **kwargs):
@@ -70,6 +72,22 @@ class InvoiceCreateView(LoginRequiredMixin, CreateView):
         if invoice.ref and invoice.numberInvoice:
             return f"{invoice.ref}/{invoice.numberInvoice}"
         return invoice.title
+
+class InvoiceEditView(LoginRequiredMixin, UpdateView):
+    model = Invoice
+    form_class = InvoiceForm
+    template_name = "invoice_modal_form.html"
+    success_url = ('crud:invoice_list')
+    
+    def form_valid(request, self, form):
+        invoice = self.object
+        if request.method == 'POST':
+            form = InvoiceForm(request.POST, instance=invoice)
+            if form.is_valid():
+                form.save()
+                return redirect('success_url')
+        return super().form_valid(form)
+
 
 class ProductCreateView(LoginRequiredMixin, CreateView):
     form_class = ProductForm

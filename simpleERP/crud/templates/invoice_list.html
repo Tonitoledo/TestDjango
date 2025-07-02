@@ -22,3 +22,26 @@
     </div>
 </div>
 {% endblock content %}
+{% block script %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Manejar clicks en las filas
+        document.querySelectorAll('.clickable-row').forEach(row => {
+            row.addEventListener('click', function(e) {
+                // Verificar si el click fue en un botón de acción
+                //if (e.target.classList.contains('action-btn') || 
+                //    e.target.closest('.action-btn') || 
+                //    e.target.closest('.actions-td')) {
+                //    return; // No hacer nada si es un botón
+                //}
+                
+                // Redirigir a la URL de la fila
+                if (this.dataset.href) {
+                    window.location.href = this.dataset.href;
+                }
+            });
+        });
+    });
+</script>
+
+{% endblock %}

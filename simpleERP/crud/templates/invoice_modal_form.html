@@ -8,7 +8,6 @@
     
     <form method="post" id="invoiceForm">
         {% csrf_token %}
-        
         <div class="card mb-4">
             <div class="card-header bg-primary text-white">
                 <h5>{% trans "Datos de la Factura" %}</h5>
@@ -114,8 +113,9 @@
                     <h4>{% trans "Total Factura:" %} <span id="invoiceTotal">0.0000</span> €</h4>
                 </div>
             </div>
+            {% endif %}
         </div>
-        {% endif %}
+        
         
         
         <div class="form-group text-right">
